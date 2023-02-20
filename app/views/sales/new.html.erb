@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <% if @sale.errors.any? %>
+          <ul class="alert alert-danger" role="alert">
+            <h6 class="alert-heading">
+              <%= @sale.errors.count %>件のエラーが発生しました
+            </h6>
+            <% @sale.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="m-2">
+                <%= form_with url: sales_path, method: :get do |f| %>
+                    <h4><%= f.label :created_at, "月を選択して売上表示", class: 'control-label' %></h4>
+                    <%= f.select :created_at, options_for_select(@search), class: "form-control" %>
+                    <button type="submit" class="btn btn-secondary btn-sm">表示</button>
+                <% end %>
+            </div>
+            <div>
+                <span class="badge badge-info">年間売上</span>
+                <%= line_chart @year_proceed.pluck(:created_at, :proceed), curve: false %>
+            </div>
+            <div class="text-center">
+                <div class="m-2 border border-secondary rounded-pill">
+                    <h4>前月の売上総計</h4>
+                    <h5><%= number_to_currency(@previous_proceed, precision: 0, unit: "¥", format: "%u %n" ) %></h5>
+                </div>
+                <div class="m-2 border border-secondary rounded-pill">
+                    <h4>今月の売上総計</h4>
+                    <h5><%= number_to_currency(@sales.sum(:proceed), precision: 0, unit: "¥", format: "%u %n" ) %></h5>
+                    <span class="text-muted">(￥<%= (@sales.sum(:proceed) - @previous_proceed).to_s(:delimited) %>)</span>
+                </div>
+            </div>
+            <div class="form-group m-4 p-4 border form-inline d-flex justify-content-center">
+                <%= form_with model: @sale do |f| %>
+                    <h4 class="text-center">売上を新規登録</h4>
+                    <p>登録日<%= f.date_field :created_at, class: 'form-control' %></p>
+                    <p>金額 <%= f.number_field :proceed, class:"form-control" %></p>
+                    <button type="submit" class="btn btn-info btn-block">登録</button>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered m-4">
+                <tr>
+                    <th colspan="3"><%= link_to "編集", edit_sale_path(@sales.first.id),class:"btn btn-success btn-block" %></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>日別売上</th>
+                    <th>前日比</th>
+                </tr>
+                <% previous_proceed = 0 %>
+                <% day = 0 %>
+                <% @sales.sort{|x, y| x[:created_at] <=> y[:created_at] }.each do |sale| %>
+                <tr>
+                    <td class="text-center"><%= sale.created_at.day %>日</td>
+                    <% today_proceed = sale.proceed.to_i %>
+                    <th>￥<%= today_proceed.to_s(:delimited) %></th>
+                    <% if (today_proceed - previous_proceed) < 0 %>
+                        <th class="bg-danger text-white">￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+                    <% else %>
+                        <th >￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+                    <% end %>
+                    <% previous_proceed = sale.proceed.to_i %>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>

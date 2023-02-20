@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <% if @item.errors.any? %>
+          <ul class="alert alert-danger" role="alert">
+            <h6 class="alert-heading">
+              <%= @item.errors.count %>件のエラーが発生しました
+            </h6>
+            <% @item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <div class="form-group p-2 m-2 border">
+            <%= form_with model: @item do |f| %>
+                <p>名前 <%= f.text_field :name %>　値段 <%= f.number_field :price, min: 0 %></p>
+                <p>在庫数 <%= f.number_field :stock, min: 0 %> 商品 <%= f.radio_button :status, "product", checked: true %>備品<%= f.radio_button :status, "equipment" %>
+                <%= f.submit "新規登録" %></p>
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <% @items.each do |item| %>
+            <div class="card col-auto form-group p-2 m-2 border" style="width: 14rem;">
+                <div class="card-header text-center">
+                    <%= form_with model: item do |f| %>
+                        <% if item.status == "product" %> 
+                            <%= link_to item_path(item.id, item: {status: "equipment"}), method: :patch ,class:"text-decoration-none" do %>
+                            <i class="fas fa-shopping-cart fa-6x"></i>
+                            <% end %>
+                        <% else %>
+                            <%= link_to item_path(item.id, item: {status: "product"}), method: :patch ,class:"text-decoration-none" do %>
+                            <i class="fas fa-broom fa-6x"></i>
+                            <% end %>
+                        <% end %>
+                </div>
+                <div class="card-body">
+                    <p>名前<%= f.text_field :name %></p>
+                    <p>値段<%= f.number_field :price, min: 0 %></p>
+                    <p>在庫数<%= f.number_field :stock, min: 0 %></p>
+                    <p>
+                        <button type="submit" class="btn btn-success">変更</button><% end %>
+                        <%= link_to "削除", item_path(item.id), method: :delete, class: "btn btn-danger", role:"button" %>
+                    </p>
+                </div>
+            </div>
+        <% end %>
+</div>
+</div>

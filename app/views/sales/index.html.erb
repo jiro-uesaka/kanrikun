@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="m-2">
+                <%= form_with url: sales_path, method: :get do |f| %>
+                    <h4><%= f.label :created_at, "月を選択して売上表示", class: 'control-label' %></h4>
+                    <%= f.select :created_at, options_for_select(@search), class: "form-control" %>
+                    <button type="submit" class="btn btn-secondary btn-sm">表示</button>
+                    <%= link_to "戻る", new_sale_path ,class:"btn btn-primary btn-sm", role:"button" %>
+                <% end %>
+            </div>
+            <div>
+                <span class="badge badge-info">月間売上</span>
+                <%= line_chart @sales.pluck(:created_at, :proceed), curve: false %>
+            </div>
+            <div class="text-center">
+                <div class="m-2 border border-secondary rounded-pill">
+                    <h4>前月の売上総計</h4>
+                    <h5><%= number_to_currency(@previous_proceed, precision: 0, unit: "¥", format: "%u %n" ) %></h5>
+                </div>
+                <div class="m-2 border border-secondary rounded-pill">
+                    <h4>当月の売上総計</h4>
+                    <h5><%= number_to_currency(@sales.sum(:proceed), precision: 0, unit: "¥", format: "%u %n" ) %></h5>
+                    <span class="text-muted">(￥<%= (@sales.sum(:proceed) - @previous_proceed).to_s(:delimited) %>)</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered m-4">
+                <tr>
+                    <th colspan="3"><%= link_to "編集", edit_sale_path(@sales.first.id),class:"btn btn-success btn-block", role:"button" %></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>日別売上</th>
+                    <th>前日比</th>
+                </tr>
+                <% previous_proceed = 0 %>
+                <% day = 0 %>
+                <% @sales.sort{|x, y| x[:created_at] <=> y[:created_at] }.each do |sale| %>
+                <tr>
+                    <td class="text-center"><%= sale.created_at.day %>日</td>
+                    <% today_proceed = sale.proceed.to_i %>
+                    <th>￥<%= today_proceed.to_s(:delimited) %></th>
+                    <% if (today_proceed - previous_proceed) < 0 %>
+                        <th class="bg-danger text-white">￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+                    <% else %>
+                        <th >￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+                    <% end %>
+                    <% previous_proceed = sale.proceed.to_i %>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>

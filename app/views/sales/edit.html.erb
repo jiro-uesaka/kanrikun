@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <% if @sale.errors.any? %>
+          <ul class="alert alert-danger" role="alert">
+            <h6 class="alert-heading">
+              <%= @sale.errors.count %>件のエラーが発生しました
+            </h6>
+            <% @sale.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="form-group border m-4 p-4 form-inline">
+            <%= form_with model: @sale do |f| %>
+                <h4 class="text-center">売上を新規登録</h4>
+                <p>登録日<%= f.date_field :created_at, class: 'form-control' %></p>
+                <p>金額 <%= f.number_field :proceed, class:"form-control" %></p>
+                <button type="submit" class="btn btn-info btn-block">登録</button>
+            <% end %>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <table class="table table-bordered m-4 col-6">
+            <tr>
+                <th></th>
+                <th>日別売上</th>
+                <th colspan="2"><%= link_to "戻る", new_sale_path ,class:"btn btn-primary btn-block" %></th>
+            </tr>
+            <% previous_proceed = 0 %>
+            <% day = 0 %>
+            <% @sales.sort{|x, y| x[:created_at] <=> y[:created_at] }.each do |sale| %>
+                <%= form_with model: sale do |f| %>
+                <tr class="form-group">
+                    <td class="text-center"><%= sale.created_at.day %>日</td>
+                    <th class="justify-content-end"><%= f.number_field :proceed, class:"form-control" %></th>
+                    <th class="text-center"><button type="submit" class="btn btn-success">変更</button></th>
+                    <th class="text-center"><%= link_to "削除", sale_path(sale.id), method: :delete, class: "btn btn-danger" %></th>
+                </tr>
+                <% end %>
+            <% end %>
+        </table>
+    </div>
+</div>

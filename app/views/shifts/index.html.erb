@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <span class="m-2"><%= link_to "スタッフ編集", shifts_path, class:"btn btn-primary", role:"button" %></span>
+        <span class="m-2"><%= link_to "勤務タイプ編集", patterns_path, class:"btn btn-success", role:"button" %></span>
+    </div>
+    <div>
+        <table class="table table-bordered" >
+            <tr>
+                <th></th>
+                <% case Date.current.month %>
+                    <% when 2 then %>
+                        <% [*1..28].each do |int| %>
+                            <th><%= int %></th>
+                        <% end %>
+                    <% when 4 , 6 , 9 , 11 then %>
+                        <% [*1..30].each do |int| %>
+                            <th><%= int %></th>
+                        <% end %>
+                    <% else %>
+                        <% [*1..31].each do |int| %>
+                            <th><%= int %></th>
+                        <% end %>
+                <% end %>
+            </tr>
+        </table>
+    </div>
+</div>

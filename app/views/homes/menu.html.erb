@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="bg-secondary text-white p-4 rounded m-4">
+            <p class="text-center"><i class="fas fa-archive fa-9x"></i></p>
+            <%= link_to items_path, class:"badge badge-secondary" do %>
+            <h2 class="text-center">在庫管理</h2>
+            <% end %>
+        </div>
+        <div class="bg-secondary text-white p-4 rounded m-4">
+            <p class="text-center"><i class="fas fa-coins fa-9x"></i></p>
+            <%= link_to new_sale_path, class:"badge badge-secondary" do %>
+            <h2 class="text-center">売上管理</h2>
+            <% end %>
+        </div>
+        <div class="bg-secondary text-white p-4 rounded m-4">
+            <p class="text-center"><i class="far fa-calendar-alt fa-9x"></i></p>
+            <%= link_to shifts_path, class:"badge badge-secondary" do %>
+            <h2 class="text-center">勤怠管理</h2>
+            <% end %>
+        </div>
+    </div>
+</div>
