@@ -12,9 +12,9 @@ shop = Shop.create!(
   ]
 )
 
-date = Date.new(2022/10/1)
+date = Date.new(2022/1/1)
 count = 0
-while count < 400 do
+while count < 700 do
     okane = Random.rand(9999)
     sales = Sale.create!(
       [
