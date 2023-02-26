@@ -14,8 +14,8 @@ shop = Shop.create!(
 
 date = Date.new(2022/1/1)
 count = 0
-while count < 700 do
-    okane = Random.rand(9999)
+while count < 500 do
+    okane = Random.rand(5000)
     sales = Sale.create!(
       [
         {proceed: okane, shop_id: 1, created_at: date.since(count.days)}

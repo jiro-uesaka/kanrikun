@@ -1,12 +1,17 @@
 <%= render 'homes/errors', error_item: @item %>
 <div class="container">
-    
     <div class="row d-flex justify-content-center">
-        <div class="form-group p-2 m-2 border">
+        <div class="form-group form-inline p-2 m-2 border">
             <%= form_with model: @item do |f| %>
-                <p>名前 <%= f.text_field :name %>　値段 <%= f.number_field :price, min: 0 %></p>
-                <p>在庫数 <%= f.number_field :stock, min: 0 %> 商品 <%= f.radio_button :status, "product", checked: true %>備品<%= f.radio_button :status, "equipment" %>
-                <button type="submit" class="btn btn-info">新規登録</button></p>
+                <div class="form-row m-1">
+                    <p>名前 <%= f.text_field :name, class: 'form-control' %></p>
+                    <p class="ml-2">値段 <%= f.number_field :price, min: 0, class: 'form-control' %></p>
+                </div>
+                <div class="form-row">
+                    <p>在庫数 <%= f.number_field :stock, min: 0, class: 'form-control' %> </p>
+                    <p class="mx-2">商品 <%= f.radio_button :status, "product", checked: true %>備品<%= f.radio_button :status, "equipment" %></p>
+                    <p><button type="submit" class="btn btn-info">新規登録</button></p>
+                </div>
             <% end %>
         </div>
     </div>

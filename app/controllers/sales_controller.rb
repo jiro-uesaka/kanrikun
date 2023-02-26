@@ -79,7 +79,7 @@ class SalesController < ApplicationController
                 sales_array << (sale.year.to_s + "-" + sale.month.to_s) 
             end
         end  
-        @search = sales_array.uniq.sort
+        @search = sales_array.uniq.sort.reverse
     end
     
     def sale_params
