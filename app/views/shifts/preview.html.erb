@@ -1,0 +1,15 @@
+<div class="mw-210mm">
+    <table class="table table-bordered table-sm text-center text-nowrap">
+        <% case Date.current.month %>
+            <% when 2 %>
+                <% @month_day = [*1..28] %>
+                <%= render 'preview_list', shifts: @shifts, patterns: @patterns, month_day: @month_day %>
+            <% when 4 , 6 , 9 , 11 %>
+                <% @month_day = [*1..30] %>
+                <%= render 'preview_list', shifts: @shifts, patterns: @patterns, month_day: @month_day %>
+            <% else %>
+                <% @month_day = [*1..31] %>
+                <%= render 'preview_list', shifts: @shifts, patterns: @patterns, month_day: @month_day %>
+        <% end %>
+    </table>
+</div>

@@ -14,28 +14,33 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-    <ul class="navbar-nav ml-auto">
-    <% if shop_signed_in? %>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "メインメニュー", menu_path ,class:"text-decoration-none" %>
-      </li>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "登録情報編集", edit_shop_registration_path ,class:"text-decoration-none" %>
-      </li>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "ログアウト", destroy_shop_session_path, method: :delete ,class:"text-decoration-none" %>
-      </li>
-    <% else %>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "管理くんとは？", about_path ,class:"text-decoration-none" %>
-      </li>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "新規登録", new_shop_registration_path ,class:"text-decoration-none" %>
-      </li>
-      <li class="navbar-text mx-2 text-monospace">
-        <%= link_to "ログイン", new_shop_session_path ,class:"text-decoration-none" %>
-      </li>
-    <% end %>
+          <div>
+            <%= link_to root_path ,class:"text-decoration-none text-white" do %>
+              <i class="fas fa-chalkboard fa-2x"></i> TOP
+            <% end %>
+          </div>
+          <ul class="navbar-nav ml-auto">
+            <% if shop_signed_in? %>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "メインメニュー", menu_path ,class:"text-decoration-none" %>
+              </li>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "登録情報編集", edit_shop_registration_path ,class:"text-decoration-none" %>
+              </li>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "ログアウト", destroy_shop_session_path, method: :delete ,class:"text-decoration-none" %>
+              </li>
+            <% else %>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "管理くんとは？", about_path ,class:"text-decoration-none" %>
+              </li>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "新規登録", new_shop_registration_path ,class:"text-decoration-none" %>
+              </li>
+              <li class="navbar-text mx-2 text-monospace">
+                <%= link_to "ログイン", new_shop_session_path ,class:"text-decoration-none" %>
+              </li>
+            <% end %>
         </ul>
       </div>
     </nav>

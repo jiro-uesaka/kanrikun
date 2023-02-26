@@ -3,10 +3,15 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   get 'homes/about', as: "about"
   get 'homes/menu', as: "menu"
-  resources :items, only: [:edit, :index, :create, :update, :destroy]
-  resources :shifts
-  resources :workers
-  resources :patterns
-  resources :sales, only: [:new, :edit, :index, :create, :update, :destroy]
+  resources :items, only: [:index, :create, :update, :destroy] do
+    resources :orders, only: [:show, :create, :update, :destroy]
+  end
+  get "orders/index", as: "orders"
+  get 'shifts/preview', as: "preview"
+  delete "shifts/destroy_all", as: "destroy_all"
+  resources :shifts, only: [:edit, :index, :create, :update, :destroy]
+  resources :workers, only: [:index, :create, :update, :destroy]
+  resources :patterns, only: [:index, :create, :update, :destroy]
+  resources :sales, only: [:show, :edit, :index, :create, :update, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

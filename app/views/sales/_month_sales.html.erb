@@ -1,0 +1,11 @@
+<div class="text-center">
+    <div class="m-2 border border-secondary rounded-pill">
+        <h4>前月の売上総計</h4>
+        <h5>￥<%= previous_proceed.to_s(:delimited) %></h5>
+    </div>
+    <div class="m-2 border border-secondary rounded-pill">
+        <h4>今月の売上総計</h4>
+        <h5>￥<%= sales.sum(:proceed).to_s(:delimited) %></h5>
+        <span class="text-muted">(￥<%= (sales.sum(:proceed) - previous_proceed).to_s(:delimited) %>)</span>
+    </div>
+</div>

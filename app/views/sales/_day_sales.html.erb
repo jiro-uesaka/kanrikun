@@ -1,0 +1,20 @@
+<tr>
+    <th></th>
+    <th>日別売上</th>
+    <th>前日比</th>
+</tr>
+<% previous_proceed = 0 %>
+<% day = 0 %>
+<% @sales.sort{|x, y| x[:created_at] <=> y[:created_at] }.each do |sale| %>
+<tr>
+    <td class="text-center"><%= sale.created_at.day %>日</td>
+    <% today_proceed = sale.proceed.to_i %>
+    <th>￥<%= today_proceed.to_s(:delimited) %></th>
+    <% if (today_proceed - previous_proceed) < 0 %>
+        <th class="bg-danger text-white">￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+    <% else %>
+        <th >￥<%= (today_proceed - previous_proceed).to_s(:delimited) %></th>
+    <% end %>
+    <% previous_proceed = sale.proceed.to_i %>
+</tr>
+<% end %>

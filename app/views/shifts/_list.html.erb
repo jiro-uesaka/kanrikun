@@ -1,0 +1,83 @@
+<tr>
+    <th></th>
+    <% month_day.each do |day| %>
+        <th><%= day %></th>
+    <% end %>
+    <th>設定人数</th>
+</tr>
+<tr>
+    <th></th>
+    <% month_day.each do |day| %>
+        <% if Shift.day_of_week(day) == "土" %>
+            <th class="bg-primary text-white">
+                <%= Shift.day_of_week(day) %>
+            </th>
+        <% elsif Shift.day_of_week(day) == "日" %>
+            <th class="bg-danger text-white">
+                <%= Shift.day_of_week(day) %>
+            </th>
+        <% else %>
+            <th>
+                <%= Shift.day_of_week(day) %>
+            </th>
+        <% end %>
+    <% end %>
+    <td><%= shifts.count %>人</td>
+</tr>
+<% shifts.each do |shift| %>
+    <% holiday = 0 %>
+    <% total_time = 0 %>
+    <tr>
+        <th>
+            <% if shift.worker.present? %>
+                <%= shift.worker.name %>
+            <% end %>
+        </th>
+        <% month_day.each do |day| %>
+            <td>
+                <% if patterns.find_by(id: shift.send("day#{day}")).present? %>
+                    <%= patterns.find_by(id: shift.send("day#{day}")).name %>
+                    <% if patterns.find_by(id: shift.send("day#{day}")).status == "holiday" %>
+                        <% holiday += 1 %>
+                    <% end %>
+                <% end %>
+            </td>
+        <% end %>
+        <td>休日：<%= holiday %>日</td>
+    </tr>
+    <tr>
+        <td>
+            始業<br>
+            終業
+        </td>
+        <% month_day.each do |day| %>
+            <td>
+                <% if patterns.find_by(id: shift.send("day#{day}")).present? %>
+                    <%= patterns.find_by(id: shift.send("day#{day}")).start_time.strftime("%H:%M") %><br>
+                    <%= patterns.find_by(id: shift.send("day#{day}")).end_time.strftime("%H:%M") %>
+                    <% total_time += Shift.work_time(day, shift) %>
+                <% end %>
+            </td>
+        <% end %>
+        <td>
+            労働時間<br>
+            <%= "#{total_time / 60}.#{total_time % 60}" %>ｈ
+        </td>
+    </tr>
+    <tr>
+        <td>
+            休憩
+        </td>
+        <% month_day.each do |day| %>
+            <td>
+                <% if patterns.find_by(id: shift.send("day#{day}")).present? %>
+                    <%= patterns.find_by(id: shift.send("day#{day}")).rest_time.strftime("%H:%M") %>
+                <% end %>
+            </td>
+        <% end %>
+        <td>
+            <%= link_to "編集", edit_shift_path(shift.id), class:"btn btn-primary btn-sm", role:"button" %>
+            <%= link_to "削除", shift_path(shift.id), method: :delete, class:"btn btn-danger btn-sm", role:"button" %>
+        </td>
+    </tr>
+<% end %>

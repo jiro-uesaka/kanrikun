@@ -1,0 +1,66 @@
+<%= form_with model: shift do |f| %>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <th><button type="submit" class="btn btn-info btn-sm">保存する</button></th>
+            <% case Date.current.month %>
+                <% when 2 then %>
+                    <% [*1..28].each do |day| %>
+                        <th class="text-center"><%= day %></th>
+                    <% end %>
+                <% when 4 , 6 , 9 , 11 then %>
+                    <% [*1..30].each do |day| %>
+                        <th class="text-center"><%= day %></th>
+                    <% end %>
+                <% else %>
+                    <% [*1..31].each do |day| %>
+                        <th class="text-center"><%= day %></th>
+                    <% end %>
+            <% end %>
+        </tr>
+        <tr>
+            <th><%= f.collection_select :worker_id, workers, :id, :name %></th>
+            <td><%= f.collection_select :day1, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day2, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day3, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day4, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day5, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day6, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day7, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day8, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day9, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day10, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day11, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day12, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day13, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day14, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day15, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day16, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day17, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day18, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day19, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day20, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day21, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day22, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day23, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day24, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day25, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day26, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day27, patterns, :id, :name %></td>
+            <td><%= f.collection_select :day28, patterns, :id, :name %></td>
+            <% case Date.current.month %>
+                <% when 4, 6, 9, 11 %>
+                    <td><%= f.collection_select :day29, patterns, :id, :name %></td>
+                    <td><%= f.collection_select :day30, patterns, :id, :name %></td>
+                <% when 1, 3, 5, 7, 8, 10, 12 %>
+                    <td><%= f.collection_select :day29, patterns, :id, :name %></td>
+                    <td><%= f.collection_select :day30, patterns, :id, :name %></td>
+                    <td><%= f.collection_select :day30, patterns, :id, :name %></td>
+            <% end %>
+        </tr>
+        <tr>
+            <th colspan="3">
+                <%= f.collection_select :all_pattern, patterns, :id, :name %>：<button type="submit" name='all' class="btn btn-info btn-sm">一括で保存する</button>
+            </th>
+        </tr>
+    </table>
+<% end %>

@@ -1,0 +1,6 @@
+<%= render 'homes/errors', error_item: @shift %>
+<p class="mx-2"><%= link_to "戻る", shifts_path, class:"btn btn-primary", role:"button" %></p>
+<div class="table-responsive">
+    <h4>シフトを変更</h4>
+    <%= render 'form', shift: @shift, patterns: @patterns, workers: @workers %>
+</div>

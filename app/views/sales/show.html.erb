@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="m-2">
+                <%= form_with url: sale_path(@search), method: :get do |f| %>
+                    <h4><%= f.label :created_at, "月を選択して売上表示", class: 'control-label' %></h4>
+                    <%= f.select :created_at, options_for_select(@search), class: "form-control" %>
+                    <button type="submit" class="btn btn-secondary btn-sm">表示</button>
+                    <%= link_to "戻る", sales_path ,class:"btn btn-primary btn-sm", role:"button" %>
+                <% end %>
+            </div>
+            <div>
+                <span class="badge badge-info">月間売上</span>
+                <%= line_chart @sales.pluck(:created_at, :proceed), curve: false %>
+            </div>
+            <%= render 'month_sales', sales: @sales, previous_proceed: @previous_proceed %>
+        </div>
+        <div class="col-4">
+            <table class="table table-bordered m-4">
+                <tr>
+                    <th colspan="3"><%= link_to "編集", edit_sale_path(@sales.first.id),class:"btn btn-success btn-block", role:"button" %></th>
+                </tr>
+                <%= render 'day_sales', sales: @sales %>
+            </table>
+        </div>
+    </div>
+</div>

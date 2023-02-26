@@ -1,0 +1,40 @@
+<%= render 'homes/errors', error_item: @pattern %>
+<div class="container">
+    <div class="row">
+        <div class="col-3 col-lg-4">
+            <p class="mx-2"><%= link_to "戻る", shifts_path, class:"btn btn-primary", role:"button" %></p>
+            <div class="form-group mx-2 p-2 border form-inline d-flex justify-content-center">
+                <%= form_with model: @pattern do |f| %>
+                    <h4 class="text-center">シフト新規登録</h4>
+                    <p>名前 <%= f.text_field :name, class:"form-control", placeholder: "3文字以内" %></p>
+                    <p>始業時間 <%= f.time_select :start_time, {minute_step: 10, default: Date.today}, class:"form-control" %></p>
+                    <p>終業時間 <%= f.time_select :end_time, {minute_step: 10, default: Date.today}, class:"form-control" %></p>
+                    <p>休憩時間 <%= f.time_select :rest_time, {minute_step: 5, default: Date.today}, class:"form-control" %></p>
+                    <p>勤務タイプ：　出勤<%= f.radio_button :status, "workday", checked: true %>　休日<%= f.radio_button :status, "holiday" %></p>
+                    <button type="submit" class="btn btn-info btn-block">登録</button>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-9 col-lg-8">
+            <% @patterns.each do |pattern| %>
+                <%= form_with model: pattern do |f| %>
+                    <div  class="form-group border form-inline py-2">
+                        <div class="form-group col-auto">名前：<%= f.text_field :name, class:"form-control" %></div>
+                        <div  class="form-row m-2">
+                            
+                            <div class="form-group col-auto">始業時間：<%= f.time_select :start_time, {minute_step: 5, include_blank: true}, class:"form-control" %></div>
+                            <div class="form-group col-auto">終業時間：<%= f.time_select :end_time, {minute_step: 5, include_blank: true}, class:"form-control" %></div>
+                        </div>
+                        <div  class="form-row m-2">
+                            <div class="form-group col-auto">休憩時間：<%= f.time_select :rest_time, {minute_step: 5, include_blank: true}, class:"form-control" %></div>
+                            <div class="form-group col-auto">勤務タイプ：　出勤<%= f.radio_button :status, "workday", checked: true %>　休日<%= f.radio_button :status, "holiday" %></div>
+                            <div class="form-group col-auto"><button type="submit" class="btn btn-success">変更</button></div>
+                            <div class="form-group col-auto"><span><%= link_to "削除", pattern_path(pattern.id), method: :delete, class: "btn btn-danger", role:"button" %></span></div>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center"><%= paginate @patterns %></div>

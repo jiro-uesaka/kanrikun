@@ -5,3 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+shop = Shop.create!(
+  [
+    {name: "東京店", email: 'aaa@aaa', password: "123456"}
+  ]
+)
+
+date = Date.new(2022/10/1)
+count = 0
+while count < 400 do
+    okane = Random.rand(9999)
+    sales = Sale.create!(
+      [
+        {proceed: okane, shop_id: 1, created_at: date.since(count.days)}
+      ]
+    )
+    count += 1
+end
