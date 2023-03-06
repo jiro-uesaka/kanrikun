@@ -2,5 +2,8 @@
     <div class="row">
         <p><%= link_to "戻る", orders_path ,class:"btn btn-primary", role:"button" %></p>
     </div>
+    <div class="row">
+        <h2><%= @title %>の発注履歴</h2>
+    </div>
     <%= render 'list', orders: @orders %>
 </div>

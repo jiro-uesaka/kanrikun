@@ -1,8 +1,11 @@
 class Item < ApplicationRecord
     
     belongs_to :shop
-    # 商品が消えても発注の履歴は残す
     has_many :orders
+    # 商品が消えても発注の履歴は残す
+    has_many :tags, dependent: :destroy
+    
+    has_one_attached :image
     
     validates :name, presence: true
     validates :price, presence: true

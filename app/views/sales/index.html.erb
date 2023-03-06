@@ -29,7 +29,7 @@
             <table class="table table-bordered m-4">
                 <% if @sales.present? %>
                     <tr>
-                        <th colspan="3"><%= link_to "編集", edit_sale_path(@sales.first.id),class:"btn btn-success btn-block" %></th>
+                        <th colspan="3"><%= link_to "編集", edit_sale_path(@sales.first.id), class:"btn btn-success btn-block" %></th>
                     </tr>
                 <% end %>
                 <%= render 'day_sales', sales: @sales %>

@@ -1,0 +1,45 @@
+<div class="card-deck">
+    <% items.each do |item| %>
+        <div class="card form-group p-2 m-2 border" style="min-width: 13rem; max-width: 14rem;">
+            <div class="card-header text-center">
+                <% if item.image.attached? %>
+                    <%= image_tag item.image, size: "100x100" %>
+                <% else %>
+                    <% if item.status == "product" %> 
+                        <i class="fas fa-shopping-cart fa-6x"></i>
+                    <% else %>
+                        <i class="fas fa-broom fa-6x"></i>
+                    <% end %>
+                <% end %>
+            </div>
+            <div>
+                <% item.tags.each do |tag| %>
+                    <%= link_to items_search_path(tag: tag.name), class:"label badge badge-primary" do %>
+                        <span><%= tag.name %></span>
+                    <% end %>
+                <% end %>
+            </div>
+            <div class="card-body">
+                <%= form_with model: item do |f| %>
+                    <p>名前<%= f.text_field :name, class:"col-auto" %></p>
+                    <p>値段<%= f.number_field :price, min: 0, class:"col-auto" %></p>
+                    <p>在庫数<%= f.number_field :stock, min: 0, class:"col-auto" %></p>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label" for="product<%= item.id %>">商品(Product)</label>
+                        <%= f.radio_button :status, "product", id: "product#{item.id}", class:"form-check-input" %>
+                        <label class="form-check-label" for="equipment<%= item.id %>">備品(Equipment)</label>
+                        <%= f.radio_button :status, "equipment", id: "equipment#{item.id}", class:"form-check-input" %>
+                    </div>
+                    <p>
+                        <button type="submit" class="btn btn-success">変更</button>
+                        <%= link_to "削除", item_path(item.id), method: :delete, class: "btn btn-danger", role:"button" %>
+                    </p>
+                <% end %>
+                <%= form_with model: [item, order] do |f| %>
+                    <p>発注数<%= f.number_field :amount, min: 0, class:"col-auto" %></p>
+                    <button type="submit" class="btn btn-info btn-block">発注する</button>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>

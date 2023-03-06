@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="row mb-2">
+        <%= link_to "一覧に戻る", items_path ,class:"btn btn-primary", role:"button" %>
+    </div>
+    <div class="row">
+        <%= render 'items_list', items: @items, order: @order %>
+    </div>
+</div>

@@ -2,6 +2,17 @@ class OrdersController < ApplicationController
     
     def index
         @orders = Order.where(shop_id: current_shop.id)
+        # 発注月で検索用
+        orders_all = Order.where(shop_id: current_shop.id).pluck(:created_at)
+        orders_array = []
+        orders_all.each do |order|
+            if order.month < 10
+                orders_array << (order.year.to_s + "-0" + order.month.to_s)  
+            else
+                orders_array << (order.year.to_s + "-" + order.month.to_s) 
+            end
+        end  
+        @search = orders_array.uniq.sort.reverse
     end
     
     def create
@@ -14,21 +25,37 @@ class OrdersController < ApplicationController
             order.status = "in_order"
             order.total_price = (item.price * order.amount)
             order.save
-            flash[:notice] = "保存しました"
-            redirect_to request.referer
+            flash[:notice] = "発注しました"
+            redirect_to items_path
         else
             # urlをitemsのindexに戻したいのでエラーメッセージをフラッシュで出す
-            flash[:notice] = "０個じゃ発注できないよ"
-            redirect_to request.referer
+            flash[:notice] = "発注する個数を入力してください"
+            redirect_to items_path
         end
         
     end
-    # 日付か商品名かで入れるデータを変える
+    # 日付か商品名か納品済みかで入れるデータを変える
     def show
         if params[:created_at]
-            @orders = Order.where(shop_id: current_shop.id, created_at: params[:created_at].in_time_zone.all_month)
+            # 検索ボックスから日付を選択した場合
+            if params[:created_at].length < 8
+                day = params[:created_at] + "-01"
+            # 日付を直接クリックした場合
+            else
+                day = params[:created_at]
+            end
+            @orders = Order.where(shop_id: current_shop.id, created_at: day.in_time_zone.all_month)
+            @title = "#{day.to_date.year}年" + "#{day.to_date.month}月" 
+        elsif params[:status]
+            @orders = Order.where(shop_id: current_shop.id, status: params[:status])
+            if params[:status] == "in_order"
+                @title = "発注中"
+            else
+                @title = "納品済み"
+            end
         else
             @orders = Order.where(shop_id: current_shop.id, name: params[:name])
+            @title = params[:name]
         end
     end
     # 納品か取り消しのみなのでstatus以外は変更しない

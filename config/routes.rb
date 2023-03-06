@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   get 'homes/about', as: "about"
   get 'homes/menu', as: "menu"
+  get 'items/search', as: "items_search"
   resources :items, only: [:index, :create, :update, :destroy] do
     resources :orders, only: [:show, :create, :update, :destroy]
   end

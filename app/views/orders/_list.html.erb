@@ -1,5 +1,4 @@
 <div class="row">
-    <h2>発注履歴</h2>
     <table class="table text-center">
         <tr>
             <th>発注日</th>
@@ -19,9 +18,13 @@
                 <td><%= order.amount %></td>
                 <td>￥<%= order.total_price.to_s(:delimited) %></td>
                 <% if order.status == "in_order" %>
-                    <td>発注中</td>
+                    <td>
+                        <%= link_to "発注中", item_order_path(order.item_id, order.id, status: order.status) %>
+                    </td>
                 <% else %>
-                    <td>納品済み</td>
+                    <td>
+                        <%= link_to "納品済み", item_order_path(order.item_id, order.id, status: order.status) %>
+                    </td>
                 <% end %>
             </tr>
         <% end %>
