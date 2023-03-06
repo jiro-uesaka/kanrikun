@@ -30,7 +30,7 @@
         <div class="col-sm-12 col-md-3">
             <div class="border rounded m-2 p-2">
                 <h4 class="text-center">現在の発注一覧</h4>
-                <% if @orders.present? %>
+                <% if Order.where(shop_id: current_shop.id).present? %>
                     <%= link_to "発注履歴", orders_path, class:"btn btn-secondary btn-block my-2" %>
                 <% end %>
                 <% @orders.each do |order| %>
