@@ -34,6 +34,21 @@
                 <% end %>
                 <%= render 'day_sales', sales: @sales %>
             </table>
+            <% if @sales.empty? %>
+                <div class="border p-2 text-center">
+                    <p>
+                        「売上を新規登録」欄から日付と金額を<br>
+                        入力して売上を登録できます。<br>
+                        （編集ボタンを押せば変更も可能です）
+                    </p>
+                    <p>
+                        売上の登録後、画面上部に表示される<br>
+                        「月を選択して売上表示」から<br>
+                        該当月を表示することで、<br>
+                        その月の売上も変更可能です。
+                    </p>
+                </div>
+            <% end %>
         </div>
     </div>
 </div>

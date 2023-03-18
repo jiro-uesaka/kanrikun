@@ -3,6 +3,9 @@
     <div class="row d-flex justify-content-center">
         <div class="form-group form-inline p-2 m-2 border">
             <%= form_with model: @item do |f| %>
+                <div class="form-row d-flex justify-content-center">
+                    <h4>アイテムを新規登録</h4>
+                </div>
                 <div class="form-row m-1">
                     <p>名前 <%= f.text_field :name, class: 'form-control' %></p>
                     <p class="ml-2">値段 <%= f.number_field :price, min: 0, class: 'form-control' %></p>
@@ -32,6 +35,22 @@
                 <h4 class="text-center">現在の発注一覧</h4>
                 <% if Order.where(shop_id: current_shop.id).present? %>
                     <%= link_to "発注履歴", orders_path, class:"btn btn-secondary btn-block my-2" %>
+                <% else %>
+                    <div class="p-2 text-center">
+                        <p>
+                            登録したアイテム下部の<br>
+                            発注欄に個数を入力し、<br>
+                            「発注する」をクリック<br>
+                            することで発注情報を<br>
+                            保存できます。
+                        </p>
+                        <p>
+                            発注後は納品ボタンを<br>
+                            押すことで自動的に<br>
+                            在庫数に加算されます。<br>
+                            （発注履歴確認も可能）
+                        </p>
+                    </div>
                 <% end %>
                 <% @orders.each do |order| %>
                     <div class="border m-1 p-2">
@@ -71,6 +90,17 @@
                 </div>
             <% end %>
             <%= render 'items_list', items: @items, order: @order %>
+            <% if @items.empty? %>
+                <div class="border m-2 p-2 text-center">
+                    <p>
+                        画面上部の「アイテムを新規登録」からアイテムを登録してください<br>
+                        タイプ（商品か備品か）を選択することでアイテムにタグが設定されます。<br>
+                        登録したアイテムのタグをクリックすることで、絞り込みが可能です。<br>
+                        （画像の登録は任意です。登録するとAIが画像を解析し自動でタグを追加設定します。）<br>
+                        なお、登録したアイテムはアイテム名で検索することもできます。
+                    </p>
+                </div>
+            <% end %>
         </div>
     </div>
 </div>
