@@ -10,11 +10,11 @@
     <th></th>
     <% month_day.each do |day| %>
         <% if Shift.day_of_week(day) == "土" %>
-            <th class="bg-primary text-white">
+            <th style="color: white; background: #007bff !important;">
                 <%= Shift.day_of_week(day) %>
             </th>
         <% elsif Shift.day_of_week(day) == "日" %>
-            <th class="bg-danger text-white">
+            <th style="color: white; background: #dc3545 !important;">
                 <%= Shift.day_of_week(day) %>
             </th>
         <% else %>
