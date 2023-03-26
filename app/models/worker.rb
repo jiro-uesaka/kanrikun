@@ -3,6 +3,6 @@ class Worker < ApplicationRecord
     has_many :shifts
     
     # レイアウトが大きく崩れないよう字数制限
-    validates :name, presence: true, length: { maximum: 4 }
+    validates :name, presence: true, length: { maximum: 10 }
     
 end

@@ -13,12 +13,12 @@
                 <div class="form-row">
                     <p>在庫数 <%= f.number_field :stock, min: 0, class: 'form-control' %> </p>
                     <p class="mx-2 form-check-inline">
+                        <%= f.radio_button :status, "product", checked: true, id: "new_product", class:"form-check-input" %>
                         <label class="form-check-label d-block d-md-none" for="new_product">商品</label>
                         <label class="form-check-label d-none d-md-block" for="new_product">商品(Product)</label>
-                        <%= f.radio_button :status, "product", checked: true, id: "new_product", class:"form-check-input" %>
+                        <%= f.radio_button :status, "equipment", id: "new_equipment", class:"form-check-input" %>
                         <label class="form-check-label d-block d-md-none" for="new_equipment">備品</label>
                         <label class="form-check-label d-none d-md-block" for="new_equipment">備品(Equipment)</label>
-                        <%= f.radio_button :status, "equipment", id: "new_equipment", class:"form-check-input" %>
                     </p>
                 </div>
                 <div class="form-row">
@@ -67,7 +67,7 @@
                             <%= order.name %>
                         </p>
                         <p class="text-right" style="margin-bottom: 1px">
-                            ￥<%= order.total_price %>
+                            ￥<%= order.total_price.to_s(:delimited) %>
                             <%= order.amount %>個
                         </p>
                         <p class="text-right" style="margin-bottom: 1px; line-height: 1px">

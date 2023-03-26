@@ -6,7 +6,7 @@
             <div class="form-group mx-2 p-2 border form-inline d-flex justify-content-center">
                 <%= form_with model: @pattern do |f| %>
                     <h4 class="text-center">シフト新規登録</h4>
-                    <p>名前 <%= f.text_field :name, class:"form-control", placeholder: "3文字以内" %></p>
+                    <p>名前 <%= f.text_field :name, class:"form-control", placeholder: "10文字以内" %></p>
                     <p>始業時間 <%= f.time_select :start_time, {minute_step: 10, default: Date.today}, class:"form-control" %></p>
                     <p>終業時間 <%= f.time_select :end_time, {minute_step: 10, default: Date.today}, class:"form-control" %></p>
                     <p>休憩時間 <%= f.time_select :rest_time, {minute_step: 5, default: Date.today}, class:"form-control" %></p>

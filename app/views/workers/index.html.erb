@@ -5,7 +5,7 @@
             <div class="form-group form-inline mx-4 p-4 border d-flex justify-content-center">
                 <%= form_with model: @worker do |f| %>
                     <h4 class="text-center">スタッフ新規登録</h4>
-                    <p>名前 <%= f.text_field :name, class:"form-control", placeholder: "4文字以内" %></p>
+                    <p>名前 <%= f.text_field :name, class:"form-control", placeholder: "10文字以内" %></p>
                     <button type="submit" class="btn btn-info btn-block">登録</button>
                 <% end %>
             </div>

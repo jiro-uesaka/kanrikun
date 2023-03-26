@@ -11,7 +11,7 @@ class WorkersController < ApplicationController
             flash[:notice] = "更新しました"
             redirect_to request.referer
         else
-            @workers = Worker.where(shop_id: current_shop.id)
+            @workers = Worker.where(shop_id: current_shop.id).page(params[:page])
             render :index
         end
         
@@ -31,7 +31,7 @@ class WorkersController < ApplicationController
             flash[:notice] = "新規登録しました"
             redirect_to request.referer
         else
-            @worker = Workers.where(shop_id: current_shop.id)
+            @workers = Worker.where(shop_id: current_shop.id).page(params[:page])
             render :index
         end
         

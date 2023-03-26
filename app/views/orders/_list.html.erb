@@ -1,11 +1,11 @@
 <div class="row">
-    <table class="table text-center">
+    <table class="table">
         <tr>
             <th>発注日</th>
             <th>品名</th>
-            <th>個数</th>
-            <th>総額</th>
-            <th>状態</th>
+            <th class="text-right">個数</th>
+            <th class="text-right">総額</th>
+            <th class="text-center">状態</th>
         </tr>
         <% orders.each do |order| %>
             <tr>
@@ -15,14 +15,14 @@
                 <td>
                     <%= link_to "#{order.name}", item_order_path(order.item_id, order.id, name: order.name) %>
                 </td>
-                <td><%= order.amount %></td>
-                <td>￥<%= order.total_price.to_s(:delimited) %></td>
+                <td class="text-right"><%= order.amount %></td>
+                <td class="text-right">￥<%= order.total_price.to_s(:delimited) %></td>
                 <% if order.status == "in_order" %>
-                    <td>
+                    <td class="text-center">
                         <%= link_to "発注中", item_order_path(order.item_id, order.id, status: order.status) %>
                     </td>
                 <% else %>
-                    <td>
+                    <td class="text-center">
                         <%= link_to "納品済み", item_order_path(order.item_id, order.id, status: order.status) %>
                     </td>
                 <% end %>

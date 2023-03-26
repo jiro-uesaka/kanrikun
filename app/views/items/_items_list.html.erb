@@ -3,7 +3,7 @@
         <div class="card form-group p-2 m-2 border" style="min-width: 13rem; max-width: 14rem;">
             <div class="card-header text-center">
                 <% if item.image.attached? %>
-                    <%= image_tag item.image, size: "100x100" %>
+                    <%= image_tag item.image, class: "item-image" %>
                 <% else %>
                     <% if item.status == "product" %> 
                         <i class="fas fa-shopping-cart fa-6x"></i>
@@ -25,10 +25,10 @@
                     <p>値段<%= f.number_field :price, min: 0, class:"col-auto" %></p>
                     <p>在庫数<%= f.number_field :stock, min: 0, class:"col-auto" %></p>
                     <div class="form-check form-check-inline mb-3">
-                        <label class="form-check-label" for="product<%= item.id %>">商品(Product)</label>
                         <%= f.radio_button :status, "product", id: "product#{item.id}", class:"form-check-input" %>
-                        <label class="form-check-label" for="equipment<%= item.id %>">備品(Equipment)</label>
+                        <label class="form-check-label" for="product<%= item.id %>">商品(Product)</label>
                         <%= f.radio_button :status, "equipment", id: "equipment#{item.id}", class:"form-check-input" %>
+                        <label class="form-check-label" for="equipment<%= item.id %>">備品(Equipment)</label>
                     </div>
                     <p>
                         <button type="submit" class="btn btn-success">変更</button>

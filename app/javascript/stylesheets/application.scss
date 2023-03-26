@@ -1,2 +1,11 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+.item-image{
+    width:100px;
+    height: 100px;
+    object-fit: cover;
+}
+@page{
+    size: auto!important;
+}
+
